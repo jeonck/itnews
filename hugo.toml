@@ -1,0 +1,96 @@
+baseURL = 'https://itnews.metacog.co.kr/'
+locale = 'en-us'
+defaultContentLanguage = 'en'
+title = 'IT Daily Brief'
+theme = 'PaperMod'
+timeZone = 'America/Chicago'
+enableRobotsTXT = true
+enableEmoji = true
+summaryLength = 40
+
+[pagination]
+  pagerSize = 15
+
+[params]
+  env = 'production'
+  title = 'IT Daily Brief'
+  description = 'A daily English-language briefing on AI/ML, development, big tech & startups, and security & cloud — published every morning.'
+  keywords = ['IT news', 'AI', 'machine learning', 'developer tools', 'big tech', 'startups', 'security', 'cloud']
+  author = 'IT Daily Brief'
+  DateFormat = 'January 2, 2006'
+  defaultTheme = 'auto'
+  disableThemeToggle = false
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = false
+  ShowWordCount = false
+  ShowRssButtonInSectionTermList = true
+  ShowToc = true
+  TocOpen = false
+  UseHugoToc = true
+  disableSpecial1stPost = true
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+
+  [params.homeInfoParams]
+    Title = 'IT Daily Brief ☕'
+    Content = 'Your morning scan of what actually happened in tech. Every day at 6:00 AM Central, a fresh briefing across four beats — **AI/ML**, **Development**, **Big Tech & Startups**, and **Security & Cloud** — each item with why it matters and a source link.'
+
+  [params.assets]
+    disableHLJS = true
+    favicon = '/favicon.svg'
+    favicon16x16 = '/favicon.svg'
+    favicon32x32 = '/favicon.svg'
+    apple_touch_icon = '/favicon.svg'
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ['title', 'permalink', 'summary', 'content']
+
+  [[params.socialIcons]]
+    name = 'rss'
+    url = '/index.xml'
+
+  [[params.socialIcons]]
+    name = 'github'
+    url = 'https://github.com/jeonck/itnews'
+
+[menu]
+  [[menu.main]]
+    identifier = 'archive'
+    name = 'Archive'
+    url = '/archives/'
+    weight = 10
+  [[menu.main]]
+    identifier = 'tags'
+    name = 'Tags'
+    url = '/tags/'
+    weight = 20
+  [[menu.main]]
+    identifier = 'search'
+    name = 'Search'
+    url = '/search/'
+    weight = 30
+  [[menu.main]]
+    identifier = 'about'
+    name = 'About'
+    url = '/about/'
+    weight = 40
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.highlight]
+    noClasses = false
