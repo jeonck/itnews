@@ -8,15 +8,26 @@ that day's post. If you are that routine, follow this document exactly.
 
 ## Daily job
 
-1. Determine today's date in **US Central time**: `TZ=America/Chicago date +%F`
-   (call it `YYYY-MM-DD`) and the offset `TZ=America/Chicago date +%:z`
-   (`-05:00` during CDT, `-06:00` during CST).
+1. Determine today's date in **US Central time**:
+
+   ```bash
+   TZ=America/Chicago date +%F                    # -> YYYY-MM-DD, the filename
+   TZ=America/Chicago date +%Y-%m-%dT%H:%M:%S%:z  # -> the front matter date
+   ```
+
+   **Use exactly what these commands print.** Do not infer the date from the
+   newest filename in `content/posts/`, from git history, from the UTC date, or
+   from "the last edition covered X so today must be X+1". The sandbox clock is
+   UTC, so the UTC date is one day ahead of Central every evening.
+
 2. If `content/posts/YYYY-MM-DD.md` already exists, stop — today is already published.
 3. Search the web for the most important IT news and insights from roughly the
    **last 24 hours**, covering the four areas below. Use several searches per
    area and prefer primary/credible sources.
 4. Write `content/posts/YYYY-MM-DD.md` using the template below.
-5. Commit and push to `main`. GitHub Actions builds and deploys automatically.
+5. Run `./scripts/check-post.sh`. It must print `OK` and exit 0 before you
+   commit. If it fails, fix the post — do not commit a failing post.
+6. Commit and push to `main`. GitHub Actions builds and deploys automatically.
 
 ## The four areas
 
@@ -40,7 +51,7 @@ report. End the post with a `## Sources` list of every link used.
 ```markdown
 ---
 title: "IT Daily Brief — August 17, 2026"
-date: 2026-08-17T06:00:00-05:00
+date: 2026-08-17T06:12:44-05:00
 draft: false
 summary: "One sentence naming the two or three biggest stories of the day."
 tags: ["daily-brief", "ai", "development", "big-tech", "security"]
@@ -77,10 +88,14 @@ Why it matters, in one or two sentences. — [Source](https://example.com/articl
 
 ## Hard rules
 
-- **Filename** is `content/posts/YYYY-MM-DD.md` — nothing else.
-- **`date`** must carry the correct Central offset (`-05:00` CDT / `-06:00` CST)
-  and be at or before the current time. A future-dated post is silently dropped
-  from the build.
+- **Filename** is `content/posts/YYYY-MM-DD.md`, where `YYYY-MM-DD` is the
+  literal output of `TZ=America/Chicago date +%F` — nothing else.
+- **`date`** is the literal output of
+  `TZ=America/Chicago date +%Y-%m-%dT%H:%M:%S%:z`, i.e. the actual moment you are
+  writing, with the real Central offset. Never hand-compute it and never round it
+  up to a nicer-looking time: a post dated even one second in the future is
+  silently dropped from the build, the site publishes with no new entry, and
+  nothing errors out. `scripts/check-post.sh` exists to catch exactly this.
 - Write in **English**, even though the operator's own notes are in Korean.
 - Use the four `##` headings above, in that order, with those emoji.
 - Every item must have a **real, working source URL** taken from search results.
@@ -93,4 +108,5 @@ Why it matters, in one or two sentences. — [Source](https://example.com/articl
 ```bash
 hugo server -D          # preview at http://localhost:1313
 hugo --minify           # production build into public/
+./scripts/check-post.sh # verify today's post is dated right and in the build
 ```
