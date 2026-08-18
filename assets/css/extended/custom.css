@@ -1,0 +1,17 @@
+/* PaperMod gives .first-entry a fixed min-height of 320px and centers its
+   content vertically. The home intro here is only a few lines, so that leaves a
+   large empty band between the social icons and the first post card. Let the
+   hero size to its content instead. */
+.first-entry.home-info {
+    min-height: unset;
+    margin: 0 0 var(--gap) 0;
+    padding-block: calc(var(--gap) / 2);
+}
+
+.first-entry.home-info .entry-content {
+    margin-block: 0.6rem 0.2rem;
+}
+
+.first-entry.home-info .social-icons {
+    padding-block-start: 0;
+}
